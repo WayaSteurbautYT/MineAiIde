@@ -53,7 +53,7 @@ function createWindow() {
 
   // Load content based on environment
   if (process.env.NODE_ENV === 'development') {
-    mainWindow.loadURL('http://localhost:3000');
+    mainWindow.loadURL('http://localhost:3004');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   } else {
     mainWindow.loadFile(path.join(__dirname, '../renderer/dist/index.html'));
@@ -640,7 +640,7 @@ app.on('web-contents-created', (event, contents) => {
   // Prevent navigation to external URLs
   contents.on('will-navigate', (navigationEvent, navigationUrl) => {
     const parsedUrl = new URL(navigationUrl);
-    if (parsedUrl.origin !== 'http://localhost:3000' && !navigationUrl.startsWith('file://')) {
+      if (parsedUrl.origin !== 'http://localhost:3004' && !navigationUrl.startsWith('file://')) {
       navigationEvent.preventDefault();
       shell.openExternal(navigationUrl);
     }

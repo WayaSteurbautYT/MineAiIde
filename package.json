@@ -51,8 +51,8 @@
       "!**/*.map"
     ],
     "win": {
-      "target": ["nsis", "portable"],
-      "icon": "public/icons/icon.svg",
+        "target": ["nsis", "portable"],
+        "icon": "public/icons/icon.svg",
       "requestedExecutionLevel": "asInvoker"
     },
     "mac": {
