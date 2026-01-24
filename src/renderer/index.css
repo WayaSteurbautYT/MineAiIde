@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --mica: 240 5% 7%; /* Windows 11 mica background color */
+  }
+  
+  /* Windows 11 scrollbars */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--mica));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(240 4% 16%);
+    border-radius: 6px;
+    border: 2px solid hsl(var(--mica));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(240 4% 20%);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: hsl(var(--mica));
+  }
+}
+
+@layer utilities {
+  .drag-region {
+    -webkit-app-region: drag;
+  }
+  
+  .no-drag-region {
+    -webkit-app-region: no-drag;
+  }
+  
+  /* Windows 11 acrylic effect */
+  .acrylic {
+    backdrop-filter: blur(40px);
+    background: hsl(240 5% 7% / 0.6);
+    border: 1px solid hsl(240 4% 16% / 0.6);
+  }
+  
+  .mica {
+    background: hsl(var(--mica));
+    backdrop-filter: blur(80px);
+  }
+  
+  /* Windows 11 animations */
+  .windows-fade-in {
+    animation: windowsFadeIn 0.3s ease-out;
+  }
+  
+  .windows-slide-in {
+    animation: windowsSlideIn 0.4s cubic-bezier(0.1, 0.9, 0.2, 1);
+  }
+}
+
+@keyframes windowsFadeIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+}
+
+@keyframes windowsSlideIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+body {
+  @apply bg-background text-foreground;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Windows 11 styled buttons */
+.windows-button {
+  @apply transition-all duration-200 ease-out;
+  background: hsl(240 5% 12%);
+  border: 1px solid hsl(240 4% 16%);
+}
+
+.windows-button:hover {
+  background: hsl(240 5% 16%);
+  border-color: hsl(240 4% 20%);
+}
+
+.windows-button:active {
+  background: hsl(240 5% 18%);
+  transform: scale(0.98);
+}
+
+/* Custom focus rings for better Windows 11 compatibility */
+.windows-focus-ring:focus {
+  outline: 2px solid hsl(240 100% 50%);
+  outline-offset: 2px;
+}
+
+/* Custom title bar styling */
+.title-bar {
+  background: linear-gradient(180deg, hsl(240 5% 8%) 0%, hsl(240 5% 6%) 100%);
+  border-bottom: 1px solid hsl(240 4% 12%);
+}
+
+/* Improved input fields */
+.windows-input {
+  background: hsl(240 5% 10%);
+  border: 1px solid hsl(240 4% 14%);
+  transition: all 0.2s ease-out;
+}
+
+.windows-input:focus {
+  background: hsl(240 5% 12%);
+  border-color: hsl(240 100% 50%);
+  box-shadow: 0 0 0 1px hsl(240 100% 50% / 0.3);
+}
+
+/* Enhanced sidebar navigation */
+.sidebar-item {
+  @apply transition-all duration-200;
+  position: relative;
+}
+
+.sidebar-item.active {
+  background: hsl(240 100% 50% / 0.1);
+  border-right: 2px solid hsl(240 100% 50%);
+}
+
+.sidebar-item:hover:not(.active) {
+  background: hsl(240 4% 12%);
+}
+
+/* Loading animation with Windows 11 style */
+.windows-loading {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    hsl(240 100% 50%) 0deg,
+    hsl(240 100% 50% / 0) 60deg,
+    hsl(240 100% 50% / 0) 300deg,
+    hsl(240 100% 50%) 360deg
+  );
+  animation: windowsSpin 1s linear infinite;
+}
+
+@keyframes windowsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
