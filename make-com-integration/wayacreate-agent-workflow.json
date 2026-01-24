@@ -1,0 +1,374 @@
+{
+  "name": "WayaCreate Agent - Minecraft AI IDE Workflow",
+  "description": "Comprehensive workflow for WayaCreate AI agent with MCP tool integration",
+  "version": "2.0.0",
+  "author": "WayaCreate",
+  "triggers": [
+    {
+      "type": "webhook",
+      "name": "AI Agent Request",
+      "description": "Triggered when AI agent needs to process a request",
+      "webhook": {
+        "url": "https://hook.integromat.com/dwc123abc456def789ghi012jkl345mno",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer {{apiKey}}"
+        },
+        "body": {
+          "request": "{{body.request}}",
+          "context": "{{body.context}}",
+          "agent_type": "{{body.agent_type}}",
+          "user_id": "{{body.user_id}}"
+        }
+      }
+    },
+    {
+      "type": "schedule",
+      "name": "Daily Training Update",
+      "description": "Update agent training data daily",
+      "schedule": {
+        "interval": "day",
+        "time": "02:00"
+      }
+    },
+    {
+      "type": "webhook",
+      "name": "YouTube Transcript Processing",
+      "description": "Process new YouTube transcripts for training",
+      "webhook": {
+        "url": "https://hook.integromat.com/youtube456def789ghi012jkl345mno678pqr",
+        "method": "POST"
+      }
+    }
+  ],
+  "flows": [
+    {
+      "name": "AI Agent Processing Pipeline",
+      "description": "Main AI agent request processing workflow",
+      "steps": [
+        {
+          "id": "1",
+          "name": "Parse Request",
+          "type": "router",
+          "config": {
+            "conditions": [
+              {
+                "label": "Code Generation",
+                "condition": "{{body.request_type}} === 'code'",
+                "flow": "code_generation_flow"
+              },
+              {
+                "label": "Model Design", 
+                "condition": "{{body.request_type}} === 'model'",
+                "flow": "model_design_flow"
+              },
+              {
+                "label": "Build/Deploy",
+                "condition": "{{body.request_type}} === 'build'",
+                "flow": "build_deploy_flow"
+              },
+              {
+                "label": "General Query",
+                "condition": "default",
+                "flow": "general_query_flow"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Code Generation Flow",
+      "description": "Generate Minecraft modding code with AI",
+      "steps": [
+        {
+          "id": "cg1",
+          "name": "Analyze Request Context",
+          "type": "code",
+          "code": "// Analyze the code generation request\nconst request = body.request;\nconst context = body.context || {};\n\n// Extract key information\nconst modType = context.mod_type || 'forge';\nconst minecraftVersion = context.minecraft_version || '1.20.1';\nconst expertise = ['java', 'minecraft_modding', modType];\n\n// Determine code type\nlet codeType = 'class';\nif (request.includes('method') || request.includes('function')) {\n  codeType = 'method';\n} else if (request.includes('event') || request.includes('handler')) {\n  codeType = 'event_handler';\n} else if (request.includes('item') || request.includes('block')) {\n  codeType = 'minecraft_component';\n}\n\nreturn {\n  request,\n  context,\n  modType,\n  minecraftVersion,\n  expertise,\n  codeType,\n  enhancedPrompt: buildEnhancedPrompt(request, context, codeType)\n};\n\nfunction buildEnhancedPrompt(req, ctx, type) {\n  let prompt = `Generate ${type} for Minecraft ${ctx.minecraft_version || '1.20.1'} ${ctx.mod_type || 'forge'} mod: ${req}`;\n  \n  if (ctx.current_project) {\n    prompt += `\\n\\nCurrent Project: ${ctx.current_project.name}`;\n    prompt += `\\nPackage: ${ctx.current_project.package || 'com.example.mod'}`;\n  }\n  \n  if (ctx.recent_files && ctx.recent_files.length > 0) {\n    prompt += `\\n\\nRecent Files: ${ctx.recent_files.map(f => f.name).join(', ')}`;\n  }\n  \n  prompt += `\\n\\nRequirements:`;\n  prompt += `\\n- Use proper Java conventions`;\n  prompt += `\\n- Include necessary imports`;\n  prompt += `\\n- Add Javadoc comments`;\n  prompt += `\\n- Follow ${ctx.mod_type || 'forge'} best practices`;\n  prompt += `\\n- Include error handling`;\n  \n  return prompt;\n}"
+        },
+        {
+          "id": "cg2",
+          "name": "Call OpenRouter API",
+          "type": "http",
+          "config": {
+            "url": "https://openrouter.ai/api/v1/chat/completions",
+            "method": "POST",
+            "headers": {
+              "Authorization": "Bearer {{openrouterApiKey}}",
+              "Content-Type": "application/json",
+              "HTTP-Referer": "https://mineai-ide.wayacreate.com",
+              "X-Title": "WayaCreate Agent - Code Generation"
+            },
+            "body": {
+              "model": "meta-llama/llama-3.2-3b-instruct:free",
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "You are WayaCreate AI Assistant, expert Minecraft modding developer. Generate clean, well-commented Java code for Minecraft mods following best practices."
+                },
+                {
+                  "role": "user", 
+                  "content": "{{1.enhancedPrompt}}"
+                }
+              ],
+              "max_tokens": 2000,
+              "temperature": 0.3
+            }
+          }
+        },
+        {
+          "id": "cg3",
+          "name": "Process AI Response",
+          "type": "code",
+          "code": "// Process the AI response and format it\nconst aiResponse = JSON.parse(body.choices[0].message.content);\n\n// Extract code blocks if present\nconst codeBlocks = aiResponse.match(/```[\\s\\S]*?```/g) || [];\nconst cleanCode = codeBlocks.map(block => block.replace(/```[a-z]*\\n?/, '').replace(/```$/, '')).join('\\n\\n');\n\n// Generate additional metadata\nconst metadata = {\n  generatedAt: new Date().toISOString(),\n  model: 'meta-llama/llama-3.2-3b-instruct:free',\n  codeType: '{{1.codeType}}',\n  modType: '{{1.modType}}',\n  minecraftVersion: '{{1.minecraftVersion}}',\n  hasCodeBlocks: codeBlocks.length > 0,\n  estimatedLines: cleanCode.split('\\n').length\n};\n\nreturn {\n  success: true,\n  response: aiResponse,\n  code: cleanCode,\n  codeBlocks: codeBlocks,\n  metadata: metadata,\n  formattedForIDE: formatForIDE(cleanCode, metadata)\n};\n\nfunction formatForIDE(code, meta) {\n  return {\n    language: 'java',\n    content: code,\n    metadata: meta,\n    suggestions: generateSuggestions(code, meta)\n  };\n}\n\nfunction generateSuggestions(code, meta) {\n  const suggestions = [];\n  \n  if (code.includes('@Mod')) {\n    suggestions.push({\n      type: 'info',\n      message: 'Consider adding mod dependencies in mods.toml'\n    });\n  }\n  \n  if (code.includes('public class') && !code.includes('extends')) {\n    suggestions.push({\n      type: 'tip',\n      message: 'You might want to extend a base class like BlockBase or ItemBase'\n    });\n  }\n  \n  return suggestions;\n}"
+        },
+        {
+          "id": "cg4",
+          "name": "Store in Database",
+          "type": "google-sheets",
+          "config": {
+            "operation": "addRow",
+            "fileId": "{{googleSheetsId}}",
+            "sheetName": "AI_Generations",
+            "values": {
+              "Timestamp": "{{now}}",
+              "User_ID": "{{body.user_id}}",
+              "Request_Type": "code_generation",
+              "Request": "{{body.request}}",
+              "Mod_Type": "{{1.modType}}",
+              "Code_Type": "{{1.codeType}}",
+              "AI_Response": "{{3.response}}",
+              "Generated_Code": "{{3.code}}",
+n              "Model_Used": "{{3.metadata.model}}",
+              "Response_Time_ms": "{{responseTime}}"
+            }
+          }
+        },
+        {
+          "id": "cg5",
+          "name": "Update Agent Performance",
+          "type": "code",
+          "code": "// Update agent performance metrics\nconst performance = {\n  agentType: 'code_assistant',\n  requestId: body.request_id,\n  success: true,\n  responseTime: responseTime,\n  modelUsed: 'meta-llama/llama-3.2-3b-instruct:free',\n  codeType: '{{1.codeType}}',\n  modType: '{{1.modType}}',\n  timestamp: new Date().toISOString()\n};\n\nreturn {\n  success: true,\n  result: '{{3.formattedForIDE}}',\n  performance: performance,\n  metadata: '{{3.metadata}}'\n};"
+        }
+      ]
+    },
+    {
+      "name": "Model Design Flow",
+      "description": "AI-assisted 3D model design for Minecraft",
+      "steps": [
+        {
+          "id": "md1",
+          "name": "Analyze Model Request",
+          "type": "code",
+          "code": "// Analyze 3D model design request\nconst request = body.request;\nconst context = body.context || {};\n\n// Determine model type\nlet modelType = 'block';\nif (request.includes('item') || request.includes('tool')) {\n  modelType = 'item';\n} else if (request.includes('entity') || request.includes('mob')) {\n  modelType = 'entity';\n} else if (request.includes('armor') || request.includes('equipment')) {\n  modelType = 'armor';\n}\n\n// Extract design requirements\nconst requirements = {\n  modelType,\n  style: context.style || 'minecraft_vanilla',\n  complexity: context.complexity || 'medium',\n  animated: request.includes('animated') || request.includes('animation'),\n  textured: !request.includes('wireframe')\n};\n\nreturn {\n  request,\n  context,\n  requirements,\n  enhancedPrompt: buildModelPrompt(request, requirements)\n};\n\nfunction buildModelPrompt(req, reqs) {\n  let prompt = `Design a ${reqs.modelType} for Minecraft: ${req}`;\n  \n  prompt += `\\n\\nDesign Requirements:`;\n  prompt += `\\n- Model Type: ${reqs.modelType}`;\n  prompt += `\\n- Style: ${reqs.style}`;\n  prompt += `\\n- Complexity: ${reqs.complexity}`;\n  prompt += `\\n- Animated: ${reqs.animated}`;\n  prompt += `\\n- Textured: ${reqs.textured}`;\n  \n  if (reqs.animated) {\n    prompt += `\\n\\nAnimation Requirements:`;\n    prompt += `\\n- Provide GeckoLib animation setup`;\n    prompt += `\\n- Include keyframe descriptions`;\n    prompt += `\\n- Suggest animation timeline`;\n  }\n  \n  prompt += `\\n\\nTechnical Requirements:`;\n  prompt += `\\n- Provide Blockbench modeling steps`;\n  prompt += `\\n- Include texture mapping guidelines`;\n  prompt += `\\n- Suggest optimal polygon count`;\n  prompt += `\\n- Include export settings`;\n  \n  return prompt;\n}"
+        },
+        {
+          "id": "md2",
+          "name": "Generate Model Design",
+          "type": "http",
+          "config": {
+            "url": "https://openrouter.ai/api/v1/chat/completions",
+            "method": "POST",
+            "headers": {
+              "Authorization": "Bearer {{openrouterApiKey}}",
+              "Content-Type": "application/json",
+              "HTTP-Referer": "https://mineai-ide.wayacreate.com",
+              "X-Title": "WayaCreate Agent - Model Design"
+            },
+            "body": {
+              "model": "meta-llama/llama-3.2-3b-instruct:free",
+              "messages": [
+                {
+                  "role": "system",
+                  "content": "You are a 3D modeling expert for Minecraft, specializing in Blockbench workflows and GeckoLib animations. Provide detailed, step-by-step modeling instructions."
+                },
+                {
+                  "role": "user",
+                  "content": "{{1.enhancedPrompt}}"
+                }
+              ],
+              "max_tokens": 2500,
+              "temperature": 0.4
+            }
+          }
+        },
+        {
+          "id": "md3",
+          "name": "Create Blockbench Project",
+          "type": "code",
+          "code": "// Create Blockbench project structure\nconst aiResponse = JSON.parse(body.choices[0].message.content);\nconst modelType = '{{1.requirements.modelType}}';\n\n// Generate Blockbench project data\nconst projectData = {\n  name: `AI_Generated_${modelType}_${Date.now()}`,\n  format_version: \"3.6\",\n  minecraft_version: \"1.20.1\",\n  meta: {\n    format_version: \"3.6\",\n    format: {\n      uid: \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n    },\n    model: {\n      identifier: `ai_generated_${modelType}`,\n      name: `AI Generated ${modelType}`,\n      texture_size: [16, 16],\n      visible_box_uv: [[0, 0], [16, 16]]\n    }\n  },\n  elements: generateModelElements(modelType, aiResponse),\n  outliner: generateOutliner(modelType),\n  textures: generateTextures(modelType),\n  animations: '{{1.requirements.animated}}' ? generateAnimations(aiResponse) : []\n};\n\nreturn {\n  success: true,\n  response: aiResponse,\n  projectData: projectData,\n  blockbenchFile: createBlockbenchFile(projectData),\n  modelingSteps: extractModelingSteps(aiResponse),\n  textureGuidelines: extractTextureGuidelines(aiResponse)\n};\n\nfunction generateModelElements(type, response) {\n  // Parse AI response to extract model structure\n  const elements = [];\n  \n  if (type === 'block') {\n    elements.push({\n      name: \"cube\",\n      from: [0, 0, 0],\n      to: [16, 16, 16],\n      faces: generateCubeFaces()\n    });\n  } else if (type === 'item') {\n    elements.push({\n      name: \"item_base\",\n      from: [2, 2, 2],\n      to: [14, 14, 14],\n      faces: generateCubeFaces()\n    });\n  }\n  \n  return elements;\n}\n\nfunction generateCubeFaces() {\n  return {\n    north: { uv: [0, 0, 16, 16], texture: \"#texture\" },\n    east: { uv: [0, 0, 16, 16], texture: \"#texture\" },\n    south: { uv: [0, 0, 16, 16], texture: \"#texture\" },\n    west: { uv: [0, 0, 16, 16], texture: \"#texture\" },\n    up: { uv: [0, 0, 16, 16], texture: \"#texture\" },\n    down: { uv: [0, 0, 16, 16], texture: \"#texture\" }\n  };\n}\n\nfunction generateOutliner(type) {\n  return [\n    {\n      name: `ai_generated_${type}`,\n      origin: [8, 8, 8],\n      color: \"#7f7f7f\",\n      children: []\n    }\n  ];\n}\n\nfunction generateTextures(type) {\n  return [\n    {\n      uuid: \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\",\n      name: `ai_generated_${type}`,\n      path: `textures/item/ai_generated_${type}.png`,\n      folder: \"item\",\n      namespace: \"mod\",\n      mode: \"bitmap\",\n      saved: true\n    }\n  ];\n}\n\nfunction generateAnimations(response) {\n  // Extract animation data from AI response\n  return [\n    {\n      name: \"animation\",\n      length: 1.0,\n      loop: \"hold_on_last_frame\",\n      anim_time_update: \"return this;\",\n      bones: {\n        \"ai_generated_model\": {\n          rotation: [0, 0, 0],\n          position: [0, 0, 0],\n          scale: [1, 1, 1]\n        }\n      }\n    }\n  ];\n}\n\nfunction createBlockbenchFile(data) {\n  return JSON.stringify(data, null, 2);\n}\n\nfunction extractModelingSteps(response) {\n  // Extract step-by-step modeling instructions\n  const steps = [];\n  const lines = response.split('\\n');\n  \n  for (const line of lines) {\n    if (line.match(/^\\d+\\./) || line.includes('Step')) {\n      steps.push(line.trim());\n    }\n  }\n  \n  return steps;\n}\n\nfunction extractTextureGuidelines(response) {\n  // Extract texture design guidelines\n  const guidelines = [];\n  const lines = response.split('\\n');\n  \n  for (const line of lines) {\n    if (line.includes('texture') || line.includes('UV') || line.includes('material')) {\n      guidelines.push(line.trim());\n    }\n  }\n  \n  return guidelines;\n}"
+        },
+        {
+          "id": "md4",
+          "name": "Generate AI Icons",
+          "type": "http",
+          "config": {
+            "url": "https://api.openai.com/v1/images/generations",
+            "method": "POST",
+            "headers": {
+              "Authorization": "Bearer {{openaiApiKey}}",
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "model": "dall-e-3",
+              "prompt": "Minecraft style {{1.requirements.modelType}} icon, pixel art, 16x16, transparent background, game asset",
+              "n": 1,
+              "size": "1024x1024",
+              "style": "natural"
+            }
+          }
+        },
+        {
+          "id": "md5",
+          "name": "Store Model Project",
+          "type": "google-sheets",
+          "config": {
+            "operation": "addRow",
+            "fileId": "{{googleSheetsId}}",
+            "sheetName": "Model_Designs",
+            "values": {
+              "Timestamp": "{{now}}",
+              "User_ID": "{{body.user_id}}",
+              "Model_Type": "{{1.requirements.modelType}}",
+              "Request": "{{body.request}}",
+              "AI_Response": "{{2.choices[0].message.content}}",
+              "Project_Data": "{{3.projectData}}",
+              "Blockbench_File": "{{3.blockbenchFile}}",
+              "Modeling_Steps": "{{3.modelingSteps}}",
+              "Generated_Icon": "{{4.data[0].url}}",
+              "Animated": "{{1.requirements.animated}}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Build & Deploy Flow",
+      "description": "Automated build and deployment pipeline",
+      "steps": [
+        {
+          "id": "bd1",
+          "name": "Analyze Build Request",
+          "type": "code",
+          "code": "// Analyze build and deployment request\nconst request = body.request;\nconst context = body.context || {};\n\nconst buildConfig = {\n  projectPath: context.project_path || './src',\n  buildType: request.includes('deploy') ? 'deploy' : 'build',\n  target: request.includes('server') ? 'server' : 'client',\n  environment: request.includes('prod') ? 'production' : 'development',\n  framework: context.framework || 'forge'\n};\n\nreturn {\n  request,\n  context,\n  buildConfig,\n  buildSteps: generateBuildSteps(buildConfig)\n};\n\nfunction generateBuildSteps(config) {\n  const steps = [];\n  \n  if (config.framework === 'forge') {\n    steps.push('gradlew build');\n    steps.push('gradlew jar');\n  } else if (config.framework === 'fabric') {\n    steps.push('./gradlew build');\n    steps.push('./gradlew remapJar');\n  }\n  \n  if (config.buildType === 'deploy') {\n    steps.push('package for deployment');\n    steps.push('upload to server');\n  }\n  \n  return steps;\n}"
+        },
+        {
+          "id": "bd2",
+          "name": "Execute Build Commands",
+          "type": "ssh",
+          "config": {
+            "host": "{{buildServer.host}}",
+            "username": "{{buildServer.username}}",
+            "password": "{{buildServer.password}}",
+            "commands": "{{1.buildSteps}}",
+            "workingDirectory": "{{1.buildConfig.projectPath}}"
+          }
+        },
+        {
+          "id": "bd3",
+          "name": "Process Build Results",
+          "type": "code",
+          "code": "// Process build results and generate report\nconst buildOutput = body.output;\nconst buildSuccess = buildOutput.includes('BUILD SUCCESSFUL');\n\nconst results = {\n  success: buildSuccess,\n  output: buildOutput,\n  artifacts: extractArtifacts(buildOutput),\n  errors: extractErrors(buildOutput),\n  warnings: extractWarnings(buildOutput),\n  buildTime: new Date().toISOString(),\n  deployable: buildSuccess && '{{1.buildConfig.buildType}}' === 'deploy'\n};\n\nreturn {\n  success: true,\n  results: results,\n  nextSteps: generateNextSteps(results)\n};\n\nfunction extractArtifacts(output) {\n  const artifacts = [];\n  const lines = output.split('\\n');\n  \n  for (const line of lines) {\n    if (line.includes('.jar') || line.includes('build/libs/')) {\n      artifacts.push(line.trim());\n    }\n  }\n  \n  return artifacts;\n}\n\nfunction extractErrors(output) {\n  const errors = [];\n  const lines = output.split('\\n');\n  \n  for (const line of lines) {\n    if (line.includes('ERROR') || line.includes('FAILED')) {\n      errors.push(line.trim());\n    }\n  }\n  \n  return errors;\n}\n\nfunction extractWarnings(output) {\n  const warnings = [];\n  const lines = output.split('\\n');\n  \n  for (const line of lines) {\n    if (line.includes('WARNING') || line.includes('deprecated')) {\n      warnings.push(line.trim());\n    }\n  }\n  \n  return warnings;\n}\n\nfunction generateNextSteps(results) {\n  const steps = [];\n  \n  if (results.success) {\n    steps.push('Test the build artifacts');\n    steps.push('Deploy to test environment');\n    if (results.deployable) {\n      steps.push('Deploy to production');\n    }\n  } else {\n    steps.push('Fix build errors');\n    steps.push('Re-run build');\n  }\n  \n  return steps;\n}"
+        },
+        {
+          "id": "bd4",
+          "name": "Deploy if Successful",
+          "type": "router",
+          "config": {
+            "conditions": [
+              {
+                "label": "Deploy to Server",
+                "condition": "{{3.results.success}} && {{3.results.deployable}}",
+                "flow": "deployment_flow"
+              },
+              {
+                "label": "Report Failure",
+                "condition": "!{{3.results.success}}",
+                "flow": "error_reporting_flow"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "mcp_tools": [
+    {
+      "name": "wayacreate-agent",
+      "description": "Main WayaCreate AI agent with Minecraft expertise",
+      "capabilities": [
+        "code_generation",
+        "model_design", 
+        "build_automation",
+        "voice_commands",
+        "youtube_analysis",
+        "github_integration",
+        "discord_integration"
+      ],
+      "endpoints": {
+        "chat": "https://hook.integromat.com/wayacreate-agent-chat",
+        "generate": "https://hook.integromat.com/wayacreate-agent-generate",
+        "analyze": "https://hook.integromat.com/wayacreate-agent-analyze"
+      },
+      "authentication": {
+        "type": "bearer",
+        "token": "{{wayacreateApiKey}}"
+      }
+    },
+    {
+      "name": "minecraft-tools",
+      "description": "Minecraft-specific development tools",
+      "capabilities": [
+        "blockbench_integration",
+        "geckolib_animations",
+        "texture_generation",
+        "sound_design",
+        "resource_pack_creation"
+      ],
+      "endpoints": {
+        "model": "https://hook.integromat.com/minecraft-tools-model",
+        "texture": "https://hook.integromat.com/minecraft-tools-texture",
+        "animation": "https://hook.integromat.com/minecraft-tools-animation"
+      }
+    },
+    {
+      "name": "cofounder-bridge",
+      "description": "Bridge to Cofounder IDE tools and workflows",
+      "capabilities": [
+        "project_import",
+        "template_generation",
+        "workflow_automation",
+        "collaboration_features"
+      ],
+      "endpoints": {
+        "import": "https://hook.integromat.com/cofounder-import",
+        "export": "https://hook.integromat.com/cofounder-export",
+        "sync": "https://hook.integromat.com/cofounder-sync"
+      }
+    }
+  ],
+  "environment_variables": {
+    "openrouterApiKey": "{{openrouterApiKey}}",
+    "openaiApiKey": "{{openaiApiKey}}",
+    "googleSheetsId": "{{googleSheetsId}}",
+    "buildServer": {
+      "host": "{{buildServerHost}}",
+      "username": "{{buildServerUsername}}",
+      "password": "{{buildServerPassword}}"
+    },
+    "wayacreateApiKey": "{{wayacreateApiKey}}"
+  },
+  "webhooks": {
+    "success": "https://your-app.com/webhook/success",
+    "error": "https://your-app.com/webhook/error",
+    "progress": "https://your-app.com/webhook/progress"
+  },
+  "monitoring": {
+    "enabled": true,
+    "log_level": "info",
+    "error_notifications": true,
+    "performance_tracking": true
+  }
+}

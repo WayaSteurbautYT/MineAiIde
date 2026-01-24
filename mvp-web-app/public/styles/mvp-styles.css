@@ -1,0 +1,93 @@
+.sidebar-title {
+    margin-bottom: 20px;
+    color: #3b82f6;
+}
+
+.projects-section {
+    margin: 20px 0;
+}
+
+.projects-label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.status-section {
+    margin-top: auto;
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.version-info {
+    color: #64748b;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-name {
+    color: #94a3b8;
+}
+
+.header-buttons {
+    display: flex;
+}
+
+.agent-select {
+    padding: 4px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    border-radius: 4px;
+}
+
+.language-select {
+    padding: 4px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.panel-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-prompt-container {
+    margin-bottom: 15px;
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #334155;
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 8px 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: #e2e8f0;
+    margin-right: 10px;
+}
+
+.build-output-container {
+    margin-top: 20px;
+}
+
+.build-output-label {
+    display: block;
+    margin-bottom: 5px;
+}

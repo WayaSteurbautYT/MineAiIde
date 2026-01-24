@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "windsurf": {
+      "serverUrl": "https://stormmcp.ai/gateway/ef265af9-4f40-4d34-a81d-928f9654a327/mcp",
+      "headers": {
+        "X-API-Key": "ag_HfoxkOoD8EacJREjDhkv5yjYinzLs2Sosb3YoqDY2c0="
+      }
+    }
+  }
+}
