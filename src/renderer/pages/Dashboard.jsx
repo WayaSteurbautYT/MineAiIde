@@ -88,9 +88,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-100 font-sans select-none">
+    <div className="flex flex-col h-screen bg-slate-950 text-slate-100 font-sans select-none">
       {/* Custom Title Bar for Windows */}
-      <div className="h-8 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 drag-region">
+      <div className="h-8 bg-slate-900 border-b border-slate-800 flex items-center justify-between px-4 drag-region flex-shrink-0">
         <div className="flex items-center gap-3 text-sm text-slate-300">
           <div className="flex items-center gap-2">
             <Box size={16} className="text-indigo-400" />

@@ -42,7 +42,7 @@ function createWindow() {
     titleBarStyle: process.platform === 'win32' ? 'default' : 'hiddenInset',
     frame: true,
     show: false,
-    icon: path.join(__dirname, '../../public/icons/icon.png')
+    icon: path.join(__dirname, '../../public/icons/icon.svg')
   });
 
   // Show window when ready

@@ -179,6 +179,7 @@ Recommended local models:
 
 ## 📖 Documentation
 
+- [**Windows Build Guide**](docs/build-windows.md) ← Build from source on Windows
 - [Getting Started Guide](docs/getting-started.md)
 - [Project Types Overview](docs/project-types.md)
 - [AI Commands Reference](docs/ai-commands.md)
