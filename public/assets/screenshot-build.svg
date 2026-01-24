@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg4)"/>
+  
+  <!-- Window chrome -->
+  <rect x="0" y="0" width="800" height="32" fill="#020617"/>
+  <circle cx="16" cy="16" r="6" fill="#ef4444"/>
+  <circle cx="36" cy="16" r="6" fill="#f59e0b"/>
+  <circle cx="56" cy="16" r="6" fill="#22c55e"/>
+  <text x="400" y="20" font-family="Arial" font-size="12" fill="#94a3b8" text-anchor="middle">MineAI IDE - Building...</text>
+  
+  <!-- Toolbar -->
+  <rect x="0" y="32" width="800" height="40" fill="#1e293b"/>
+  <rect x="20" y="42" width="80" height="24" fill="#22c55e" rx="4"/>
+  <text x="60" y="58" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">▶ Build</text>
+  <rect x="110" y="42" width="80" height="24" fill="#334155" rx="4"/>
+  <text x="150" y="58" font-family="Arial" font-size="11" fill="#94a3b8" text-anchor="middle">Run Client</text>
+  <rect x="200" y="42" width="80" height="24" fill="#334155" rx="4"/>
+  <text x="240" y="58" font-family="Arial" font-size="11" fill="#94a3b8" text-anchor="middle">Export</text>
+  
+  <!-- Terminal area -->
+  <rect x="10" y="82" width="780" height="358" fill="#0f172a" rx="8"/>
+  <text x="30" y="105" font-family="Arial" font-size="12" fill="#94a3b8" font-weight="bold">Terminal - Build Output</text>
+  
+  <!-- Build output lines -->
+  <text x="30" y="135" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Starting Gradle build...</text>
+  <text x="30" y="155" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Configuring project 'rubytools'...</text>
+  <text x="30" y="175" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Resolving dependencies...</text>
+  <text x="30" y="195" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Compiling Java sources...</text>
+  <text x="30" y="215" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Processing resources...</text>
+  <text x="30" y="235" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Running transformations...</text>
+  <text x="30" y="255" font-family="Consolas, monospace" font-size="11" fill="#64748b">> Reobfuscating jar...</text>
+  <text x="30" y="285" font-family="Consolas, monospace" font-size="11" fill="#22c55e">BUILD SUCCESSFUL in 23s</text>
+  <text x="30" y="305" font-family="Consolas, monospace" font-size="11" fill="#22c55e">8 actionable tasks: 8 executed</text>
+  
+  <!-- Output file -->
+  <text x="30" y="335" font-family="Consolas, monospace" font-size="11" fill="#22d3ee">> Output: build/libs/rubytools-1.0.0.jar (2.4 MB)</text>
+  
+  <!-- Success banner -->
+  <rect x="200" y="360" width="400" height="50" fill="#22c55e" rx="8" opacity="0.9"/>
+  <text x="400" y="385" font-family="Arial" font-size="14" fill="#fff" text-anchor="middle" font-weight="bold">✓ Build Complete! Ready to run in Minecraft</text>
+  <text x="400" y="402" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle" opacity="0.8">rubytools-1.0.0.jar created</text>
+  
+  <!-- Progress indicator (animated feel) -->
+  <rect x="30" y="420" width="740" height="8" fill="#334155" rx="4"/>
+  <rect x="30" y="420" width="740" height="8" fill="#22c55e" rx="4"/>
+  
+  <!-- Placeholder badge -->
+  <rect x="550" y="100" width="200" height="30" fill="#6366f1" rx="15" opacity="0.9"/>
+  <text x="650" y="120" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">📹 GIF Placeholder</text>
+</svg>

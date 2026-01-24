@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="450" fill="url(#bg3)"/>
+  
+  <!-- Window chrome -->
+  <rect x="0" y="0" width="800" height="32" fill="#020617"/>
+  <circle cx="16" cy="16" r="6" fill="#ef4444"/>
+  <circle cx="36" cy="16" r="6" fill="#f59e0b"/>
+  <circle cx="56" cy="16" r="6" fill="#22c55e"/>
+  <text x="400" y="20" font-family="Arial" font-size="12" fill="#94a3b8" text-anchor="middle">MineAI IDE - New Project</text>
+  
+  <!-- Modal background overlay -->
+  <rect x="0" y="32" width="800" height="418" fill="#000" opacity="0.5"/>
+  
+  <!-- Wizard Modal -->
+  <rect x="150" y="70" width="500" height="340" fill="#1e293b" rx="12"/>
+  
+  <!-- Header -->
+  <text x="400" y="105" font-family="Arial" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">Create New Project</text>
+  
+  <!-- Step indicators -->
+  <g transform="translate(250, 125)">
+    <circle cx="0" cy="0" r="12" fill="#6366f1"/>
+    <text x="0" y="4" font-family="Arial" font-size="10" fill="#fff" text-anchor="middle">1</text>
+    <line x1="12" y1="0" x2="88" y2="0" stroke="#334155" stroke-width="2"/>
+    <circle cx="100" cy="0" r="12" fill="#334155"/>
+    <text x="100" y="4" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">2</text>
+    <line x1="112" y1="0" x2="188" y2="0" stroke="#334155" stroke-width="2"/>
+    <circle cx="200" cy="0" r="12" fill="#334155"/>
+    <text x="200" y="4" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">3</text>
+  </g>
+  
+  <!-- Project Type Selection -->
+  <text x="180" y="175" font-family="Arial" font-size="14" fill="#94a3b8">Select Project Type:</text>
+  
+  <!-- Project type cards -->
+  <g transform="translate(180, 190)">
+    <!-- Forge - Selected -->
+    <rect x="0" y="0" width="90" height="70" fill="#334155" rx="8" stroke="#6366f1" stroke-width="2"/>
+    <text x="45" y="30" font-family="Arial" font-size="24" text-anchor="middle">🔨</text>
+    <text x="45" y="55" font-family="Arial" font-size="11" fill="#fff" text-anchor="middle">Forge</text>
+    
+    <!-- Fabric -->
+    <rect x="105" y="0" width="90" height="70" fill="#334155" rx="8"/>
+    <text x="150" y="30" font-family="Arial" font-size="24" text-anchor="middle">🧵</text>
+    <text x="150" y="55" font-family="Arial" font-size="11" fill="#94a3b8" text-anchor="middle">Fabric</text>
+    
+    <!-- Spigot -->
+    <rect x="210" y="0" width="90" height="70" fill="#334155" rx="8"/>
+    <text x="255" y="30" font-family="Arial" font-size="24" text-anchor="middle">🔌</text>
+    <text x="255" y="55" font-family="Arial" font-size="11" fill="#94a3b8" text-anchor="middle">Spigot</text>
+    
+    <!-- Datapack -->
+    <rect x="315" y="0" width="90" height="70" fill="#334155" rx="8"/>
+    <text x="360" y="30" font-family="Arial" font-size="24" text-anchor="middle">📦</text>
+    <text x="360" y="55" font-family="Arial" font-size="11" fill="#94a3b8" text-anchor="middle">Datapack</text>
+  </g>
+  
+  <!-- Form fields -->
+  <text x="180" y="290" font-family="Arial" font-size="12" fill="#94a3b8">Project Name:</text>
+  <rect x="180" y="298" width="440" height="36" fill="#334155" rx="6"/>
+  <text x="195" y="322" font-family="Arial" font-size="14" fill="#fff">Ruby Tools Mod</text>
+  
+  <text x="180" y="355" font-family="Arial" font-size="12" fill="#94a3b8">Minecraft Version:</text>
+  <rect x="180" y="363" width="200" height="36" fill="#334155" rx="6"/>
+  <text x="195" y="387" font-family="Arial" font-size="14" fill="#fff">1.20.1</text>
+  <text x="365" y="387" font-family="Arial" font-size="14" fill="#64748b">▼</text>
+  
+  <!-- Buttons -->
+  <rect x="430" y="363" width="90" height="36" fill="#334155" rx="6"/>
+  <text x="475" y="386" font-family="Arial" font-size="12" fill="#94a3b8" text-anchor="middle">Cancel</text>
+  
+  <rect x="530" y="363" width="90" height="36" fill="#6366f1" rx="6"/>
+  <text x="575" y="386" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">Create →</text>
+  
+  <!-- Placeholder badge -->
+  <rect x="300" y="125" width="200" height="30" fill="#22c55e" rx="15" opacity="0.9"/>
+  <text x="400" y="145" font-family="Arial" font-size="12" fill="#fff" text-anchor="middle">📹 GIF Placeholder</text>
+</svg>

@@ -1,325 +1,377 @@
-# 🎮 MineAI IDE
+<div align="center">
+
+# <img src="public/icons/logo.svg" width="48" height="48" alt="MineAI Logo"> MineAI IDE
+
+### The AI-Powered Minecraft Development Environment
+
+![Banner](public/assets/banner.svg)
+
+[![Download](https://img.shields.io/badge/Download-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/WayaSteurbautYT/MineAiIde/releases/latest)
+[![License](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/WayaSteurbautYT/MineAiIde?style=for-the-badge&color=f59e0b)](https://github.com/WayaSteurbautYT/MineAiIde/stargazers)
+[![Discord](https://img.shields.io/badge/Discord-Join-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/mineai)
+
+**Create Minecraft mods, plugins, and datapacks by describing what you want.  
+No coding experience required!**
+
+[⬇️ Quick Install](#-quick-install) • [🎬 Watch Demo](#-demo) • [📖 Docs](#-documentation) • [💎 Examples](#-example-mod)
+
+---
+
+</div>
+
+## 🚀 Quick Install
+
+### Windows (One-Click)
+
+```powershell
+# Run in PowerShell (Admin)
+winget install MineAI.IDE
+```
+
+**Or download the installer:**
+
+| Installer | Size | Notes |
+|-----------|------|-------|
+| [📦 **MineAI-IDE-Setup.exe**](https://github.com/WayaSteurbautYT/MineAiIde/releases/latest/download/mineai-ide-1.0.0-x64-setup.exe) | ~150MB | Recommended - Full installer |
+| [📁 **MineAI-IDE-Portable.exe**](https://github.com/WayaSteurbautYT/MineAiIde/releases/latest/download/mineai-ide-1.0.0.exe) | ~150MB | No install required |
+
+> **Requirements:** Windows 10/11 64-bit, 8GB RAM recommended
+
+---
+
+## 🎬 Demo
+
+<!-- TODO: Replace with actual recorded GIFs -->
+
+### 💬 Describe → 🔨 Generate → ▶️ Play
+
+<table>
+<tr>
+<td width="50%">
+
+**Step 1: Tell AI What You Want**
+
+![AI Generation Demo](public/assets/screenshot-ai-generation.svg)
+
+*"Create a ruby sword that deals 15 damage and shoots fireballs on right-click"*
+
+</td>
+<td width="50%">
+
+**Step 2: Build & Run**
+
+![Build Demo](public/assets/screenshot-build.svg)
+
+*One click to compile → One click to play*
+
+</td>
+</tr>
+</table>
+
+### 🎨 Full IDE Experience
 
 <div align="center">
 
-![MineAI IDE Banner](public/assets/banner.png)
+![Dashboard](public/assets/screenshot-dashboard.svg)
 
-**The Ultimate AI-Powered Minecraft Development Environment**
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen.svg)](https://github.com/mineai/mineai-ide/releases)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Community-7289da.svg)](https://discord.gg/mineai)
-
-*Create Minecraft mods, plugins, datapacks, and more with AI assistance — no coding experience required!*
-
-[🚀 Download](#-installation) • [📖 Documentation](#-documentation) • [💬 Community](#-community) • [🤝 Contributing](#-contributing)
+*Project Dashboard with AI Assistant, File Explorer, and Terminal*
 
 </div>
 
 ---
 
-## ✨ Features
+## ✨ Why MineAI IDE?
 
-### 🤖 AI-Powered Development
-- **Smart Code Generation** - Describe what you want, and AI creates the code
-- **Natural Language Commands** - "Create a diamond sword that shoots fireballs"
-- **Crash Log Analysis** - AI analyzes errors and provides fixes
-- **Learning System** - AI improves based on your preferences
+<table>
+<tr>
+<td align="center" width="25%">
+<h3>🤖</h3>
+<h4>AI-Powered</h4>
+Describe in plain English.<br>AI writes the code.
+</td>
+<td align="center" width="25%">
+<h3>📦</h3>
+<h4>All Platforms</h4>
+Forge, Fabric, Spigot,<br>Paper, Datapacks
+</td>
+<td align="center" width="25%">
+<h3>⚡</h3>
+<h4>One-Click Build</h4>
+From idea to playable<br>mod in minutes
+</td>
+<td align="center" width="25%">
+<h3>🆓</h3>
+<h4>100% Free</h4>
+Open source, MIT license,<br>no hidden costs
+</td>
+</tr>
+</table>
 
-### 🎨 Visual Creation Suite
-- **3D Model Editor** - Blockbench-style model creation
-- **Texture Editor** - Pixel art textures with AI assistance
-- **Animation Editor** - GeckoLib animation support
-- **Drag & Drop** - Import .bbmodel, textures, and more
+### Supported Project Types
 
-### 📦 All Project Types Supported
-| Type | Description | Versions |
-|------|-------------|----------|
-| **Forge Mod** | Classic Minecraft Forge modding | 1.12.2 - 1.20.4 |
-| **Fabric Mod** | Lightweight modern modding | 1.14 - 1.20.4 |
-| **NeoForge Mod** | Next-gen Forge fork | 1.20.1 - 1.21 |
-| **Spigot Plugin** | Server plugins | 1.8.8 - 1.20.4 |
-| **Paper Plugin** | High-performance plugins | 1.19.4 - 1.20.4 |
-| **Datapack** | Vanilla data-driven content | 1.13 - 1.20.4 |
-| **Resource Pack** | Textures, models, sounds | All versions |
-| **Modpack** | Curated collections | All versions |
-
-### 🔧 Built-in Tools
-- **Project Wizard** - Step-by-step project creation
-- **Code Editor** - Syntax highlighting, autocomplete
-- **Terminal** - Integrated command line
-- **Git Integration** - Version control built-in
-- **One-Click Build** - Compile and package instantly
-
-### 🌐 Online + Offline
-- **Cloud AI** - Powerful models via OpenRouter
-- **Local AI** - Ollama support for offline work
-- **Auto-Sync** - Seamless transition between modes
-- **Team Collaboration** - Real-time editing (coming soon)
-
----
-
-## 🖼️ Screenshots
-
-<div align="center">
-<img src="public/assets/screenshot-dashboard.gif" alt="Dashboard" width="80%">
-<p><em>Project Dashboard with AI Assistant</em></p>
-
-<img src="public/assets/screenshot-wizard.gif" alt="Project Wizard" width="80%">
-<p><em>Step-by-Step Project Creation</em></p>
-
-<img src="public/assets/screenshot-editor.gif" alt="Code Editor" width="80%">
-<p><em>AI-Powered Code Editor</em></p>
-</div>
+| Type | Versions | Status |
+|------|----------|--------|
+| **Forge Mod** | 1.12.2 - 1.21 | ✅ Full Support |
+| **Fabric Mod** | 1.14 - 1.21 | ✅ Full Support |
+| **NeoForge Mod** | 1.20.1 - 1.21 | ✅ Full Support |
+| **Spigot Plugin** | 1.8.8 - 1.21 | ✅ Full Support |
+| **Paper Plugin** | 1.19.4 - 1.21 | ✅ Full Support |
+| **Datapack** | 1.13 - 1.21 | ✅ Full Support |
+| **Resource Pack** | All | ✅ Full Support |
+| **Modpack** | All | 🚧 Coming Soon |
 
 ---
 
-## 📥 Installation
+## 💎 Example Mod
 
-### Download Pre-built Binaries
+This mod was created with **one AI prompt** in MineAI IDE:
 
-| Platform | Download |
-|----------|----------|
-| Windows (x64) | [MineAI-IDE-1.0.0-win-x64.exe](https://github.com/mineai/mineai-ide/releases/latest) |
-| Windows (ARM64) | [MineAI-IDE-1.0.0-win-arm64.exe](https://github.com/mineai/mineai-ide/releases/latest) |
-| macOS (Intel) | [MineAI-IDE-1.0.0-mac-x64.dmg](https://github.com/mineai/mineai-ide/releases/latest) |
-| macOS (Apple Silicon) | [MineAI-IDE-1.0.0-mac-arm64.dmg](https://github.com/mineai/mineai-ide/releases/latest) |
-| Linux (AppImage) | [MineAI-IDE-1.0.0-linux.AppImage](https://github.com/mineai/mineai-ide/releases/latest) |
-| Linux (deb) | [MineAI-IDE-1.0.0-linux.deb](https://github.com/mineai/mineai-ide/releases/latest) |
-
-### Build from Source
-
-```bash
-# Clone the repository
-git clone https://github.com/mineai/mineai-ide.git
-cd mineai-ide
-
-# Install dependencies
-npm install
-
-# Run in development mode
-npm run dev
-
-# Build for your platform
-npm run build           # Current platform
-npm run build:win       # Windows
-npm run build:mac       # macOS
-npm run build:linux     # Linux
-npm run build:all       # All platforms
+```
+Create a ruby tools mod with a ruby sword (12 damage, glows red), 
+ruby pickaxe (faster than diamond), ruby ore (spawns Y 5-20), 
+and crafting recipes for all items.
 ```
 
-### Requirements
-- **Node.js**: 18.0 or higher
-- **npm**: 9.0 or higher
-- **JDK**: 17+ (for mod building)
-- **Gradle/Maven**: Auto-downloaded per project
+**Result: [Ruby Tools Mod](examples/ruby-tools-mod/)** — Full source code included!
+
+<details>
+<summary><b>📜 See the generated code</b></summary>
+
+```java
+// Ruby Sword - Auto-generated by MineAI
+public static final RegistryObject<Item> RUBY_SWORD = ITEMS.register(
+    "ruby_sword",
+    () -> new SwordItem(RUBY_TIER, 7, -2.4f, new Item.Properties()) {
+        @Override
+        public boolean isFoil(ItemStack stack) {
+            return true; // Glow effect
+        }
+    }
+);
+```
+
+</details>
 
 ---
 
-## 🚀 Quick Start
+## 🛠️ Getting Started
 
-### 1. Create Your First Mod
+### 1️⃣ Create a Project
 
-1. Open MineAI IDE
-2. Click **"New Project"**
-3. Select **Forge Mod** (or your preferred type)
-4. Enter your mod name: `My Awesome Mod`
-5. Select Minecraft version: `1.20.1`
-6. Click **"Create Project"**
+![Project Wizard](public/assets/screenshot-wizard.svg)
 
-### 2. Add Content with AI
+1. Click **"New Project"**
+2. Choose **Forge**, **Fabric**, **Spigot**, or other
+3. Enter your mod name
+4. Select Minecraft version
+5. Click **Create** — Done!
 
-In the AI chat, type:
+### 2️⃣ Add Content with AI
+
+Open the AI chat and describe what you want:
+
 ```
-Create a ruby sword that deals 15 damage and has a special ability 
-to shoot fireballs when right-clicked
+✨ "Add a teleportation staff that teleports the player 50 blocks in the direction they're looking"
+
+✨ "Create a custom enchantment called 'Vampiric' that heals the player when attacking"
+
+✨ "Make a new dimension with floating islands and custom sky color"
 ```
 
-MineAI will generate:
-- Item class with custom damage
-- Fireball shooting logic
-- Model JSON
-- Texture placeholder
-- Recipe
+### 3️⃣ Build & Test
 
-### 3. Build & Test
-
-1. Click **"Build Mod"** button (or press `Ctrl+B`)
-2. Click **"Run Client"** (or press `F5`)
-3. Test your mod in Minecraft!
+- **`Ctrl+B`** — Build your mod
+- **`F5`** — Run Minecraft with your mod
+- **`Ctrl+Shift+B`** — Export final JAR
 
 ---
 
-## 🤖 AI Configuration
+## 🤖 AI Options
 
-### Cloud AI (OpenRouter)
-MineAI uses OpenRouter for cloud AI, which provides access to multiple models:
-- Google Gemini 2.0 Flash (free tier)
+MineAI works **online** or **offline** — your choice!
+
+### ☁️ Cloud AI (Default)
+
+Uses [OpenRouter](https://openrouter.ai) for powerful AI models:
+- Google Gemini 2.0 Flash (free tier included)
 - Claude 3.5 Sonnet
 - GPT-4o
-- Llama 3.2
 
-A default API key is included for getting started. For heavy usage, get your own key at [openrouter.ai](https://openrouter.ai).
+### 🖥️ Local AI (Offline)
 
-### Local AI (Ollama)
-For offline development or privacy:
+Use [Ollama](https://ollama.ai) for 100% offline development:
 
-1. Install [Ollama](https://ollama.ai)
-2. Pull a model: `ollama pull llama3.2` or `ollama pull codellama`
-3. In MineAI settings, switch to "Local AI"
-4. Select your model
+```bash
+# Install Ollama, then pull a model
+ollama pull llama3.2
+ollama pull codellama
+```
 
-Recommended local models:
-- `llama3.2` - General purpose
-- `codellama` - Code focused
-- `deepseek-coder` - Code optimized
-- `qwen2.5-coder` - Fast code generation
+In MineAI → Settings → Switch to "Local AI"
 
 ---
 
 ## 📖 Documentation
 
-- [**Windows Build Guide**](docs/build-windows.md) ← Build from source on Windows
-- [Getting Started Guide](docs/getting-started.md)
-- [Project Types Overview](docs/project-types.md)
-- [AI Commands Reference](docs/ai-commands.md)
-- [GeckoLib Animation Guide](docs/geckolib-guide.md)
-- [Blockbench Integration](docs/blockbench-guide.md)
-- [CLI Reference](docs/cli-reference.md)
-- [API Documentation](docs/api-reference.md)
+| Guide | Description |
+|-------|-------------|
+| **[🪟 Windows Build Guide](docs/build-windows.md)** | Build from source on Windows |
+| **[🎬 Video Scripts](docs/video-scripts.md)** | Scripts for tutorial videos/GIFs |
+| **[🚀 Getting Started](docs/getting-started.md)** | First steps with MineAI |
+| **[💡 AI Commands](docs/ai-commands.md)** | Full list of AI prompts |
+| **[📦 Project Types](docs/project-types.md)** | Forge vs Fabric vs Spigot |
 
 ---
 
-## 🎯 Roadmap
+## 🏗️ Building from Source
 
-### ✅ Version 1.0 (Current)
-- [x] Core IDE functionality
+### Prerequisites
+
+- Node.js 18+
+- Python 3.10+ (for native modules)
+- Visual Studio Build Tools (Windows)
+
+### Quick Build
+
+```bash
+git clone https://github.com/WayaSteurbautYT/MineAiIde.git
+cd MineAiIde
+npm install
+npm run build:win
+```
+
+Output: `release/mineai-ide-1.0.0-x64-setup.exe`
+
+*See [Windows Build Guide](docs/build-windows.md) for detailed instructions.*
+
+---
+
+## 🗺️ Roadmap
+
+### ✅ v1.0 — Current Release
 - [x] AI code generation
-- [x] Project wizard
-- [x] All major mod types
+- [x] Forge/Fabric/Spigot support
+- [x] One-click build
 - [x] Git integration
-- [x] Windows/macOS/Linux builds
+- [x] Windows release
 
-### 🚧 Version 1.1 (In Progress)
-- [ ] Full 3D model editor
-- [ ] Texture painting
-- [ ] Animation timeline
+### 🚧 v1.1 — In Progress
+- [ ] 3D block/item model editor
+- [ ] Texture painting tool
+- [ ] Animation timeline (GeckoLib)
+- [ ] Linux/Mac builds
+
+### 📋 v1.2 — Planned
 - [ ] Team collaboration
-
-### 📋 Version 1.2 (Planned)
-- [ ] Community marketplace
+- [ ] Mod marketplace
 - [ ] Plugin system
-- [ ] Discord bot integration
-- [ ] Live player maps
-
-### 🔮 Future
-- [ ] AI model training
-- [ ] Mod analytics
-- [ ] Automated testing
-- [ ] One-click deployment
+- [ ] Auto-updates
 
 ---
 
 ## 💬 Community
 
-Join our community to get help, share creations, and contribute:
-
-- **Discord**: [discord.gg/mineai](https://discord.gg/mineai)
-- **Twitter/X**: [@MineAI_IDE](https://twitter.com/MineAI_IDE)
-- **Reddit**: [r/MineAI](https://reddit.com/r/MineAI)
-- **GitHub Discussions**: [Discussions](https://github.com/mineai/mineai-ide/discussions)
+<table>
+<tr>
+<td align="center">
+<a href="https://discord.gg/mineai">
+<img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord">
+<br><b>Join Discord</b>
+</a>
+</td>
+<td align="center">
+<a href="https://twitter.com/MineAI_IDE">
+<img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter">
+<br><b>Follow Updates</b>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/WayaSteurbautYT/MineAiIde/discussions">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+<br><b>Discussions</b>
+</a>
+</td>
+<td align="center">
+<a href="https://www.youtube.com/@MineAI_IDE">
+<img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
+<br><b>Tutorials</b>
+</a>
+</td>
+</tr>
+</table>
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how to help:
+We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md).
 
-### Code Contributions
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit changes: `git commit -m 'feat: add amazing feature'`
-4. Push to branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-### Other Ways to Help
-- 🐛 Report bugs via [Issues](https://github.com/mineai/mineai-ide/issues)
-- 💡 Suggest features
-- 📝 Improve documentation
-- 🌍 Translate to other languages
-- ⭐ Star the repository
-
-### Development Setup
 ```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/mineai-ide.git
-
-# Install dependencies
+# Fork, clone, and start developing
+git clone https://github.com/YOUR_USERNAME/MineAiIde.git
 npm install
-
-# Start development
 npm run dev
 ```
 
 ---
 
-## 🏗️ Architecture
+## ❓ FAQ
 
-```
-MineAIIDE/
-├── src/
-│   ├── main/           # Electron main process
-│   │   ├── main.js
-│   │   ├── project-manager.js
-│   │   ├── agents/     # AI agent system
-│   │   └── integrations/
-│   ├── preload/        # Preload scripts
-│   └── renderer/       # React frontend
-│       ├── components/
-│       ├── pages/
-│       ├── services/   # AI, Database, etc.
-│       └── stores/     # State management
-├── agents/             # AI agent definitions
-├── templates/          # Project templates
-├── config/             # Configuration files
-└── public/             # Static assets
-```
+<details>
+<summary><b>Is MineAI IDE really free?</b></summary>
+
+Yes! MineAI IDE is 100% free and open source under the MIT license. The cloud AI has a free tier that's generous for most users. For unlimited use, get your own API key or use local AI (Ollama).
+
+</details>
+
+<details>
+<summary><b>Do I need to know how to code?</b></summary>
+
+No! That's the whole point. Just describe what you want in plain English, and MineAI generates the code. However, knowing basics of Minecraft modding concepts helps you give better prompts.
+
+</details>
+
+<details>
+<summary><b>What Minecraft versions are supported?</b></summary>
+
+We support Minecraft 1.12.2 through 1.21 for Forge/Fabric mods, 1.8.8 through 1.21 for Spigot/Paper plugins, and 1.13+ for datapacks.
+
+</details>
+
+<details>
+<summary><b>Can I use my mods commercially?</b></summary>
+
+Yes! Mods you create are yours. You can upload them to CurseForge, Modrinth, sell them, or do whatever you want.
+
+</details>
 
 ---
 
 ## 📄 License
 
-MineAI IDE is open source software licensed under the [MIT License](LICENSE).
+MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🙏 Credits
 
-MineAI IDE is built on the shoulders of giants:
+Built with [Electron](https://electronjs.org), [React](https://reactjs.org), [Vite](https://vitejs.dev), [Tailwind CSS](https://tailwindcss.com), and powered by [OpenRouter](https://openrouter.ai) & [Ollama](https://ollama.ai).
 
-- [Electron](https://electronjs.org/) - Cross-platform desktop apps
-- [React](https://reactjs.org/) - UI framework
-- [Vite](https://vitejs.dev/) - Build tooling
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Three.js](https://threejs.org/) - 3D rendering
-- [OpenRouter](https://openrouter.ai/) - AI model access
-- [Ollama](https://ollama.ai/) - Local AI
-
-Special thanks to the Minecraft modding community and content creators who inspired this project:
-- Notch & Jeb - For creating Minecraft
-- Technoblade - For the never-give-up spirit 👑
-- Dream - For creative problem solving
-- Hypixel Team - For server innovation
-- All the amazing mod developers
+Special thanks to the Minecraft modding community ❤️
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the Minecraft Community**
+**Made with ❤️ for Minecraft Creators**
 
-*"Every great build starts with a single block."*
+*"Every great mod starts with an idea. MineAI turns ideas into reality."*
 
-⭐ Star this repo if MineAI helps you create something awesome! ⭐
+⭐ **Star this repo** if MineAI helps you build something awesome!
+
+<br>
+
+[![Download Now](https://img.shields.io/badge/Download_MineAI_IDE-6366f1?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/WayaSteurbautYT/MineAiIde/releases/latest)
 
 </div>
