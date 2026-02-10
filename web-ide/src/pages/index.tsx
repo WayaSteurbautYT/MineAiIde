@@ -7,6 +7,7 @@ import { MinecraftTools } from '../components/MinecraftTools';
 import { TabNavigation } from '../components/TabNavigation';
 import { MinecraftCommandPalette } from '../components/MinecraftCommandPalette';
 import { AIProviderSettings } from '../components/AIProviderSettings';
+import { BeginnerTutorials } from '../components/BeginnerTutorials';
 import { useStore } from '../store/useStore';
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
     { id: 'tools', label: 'Minecraft Tools', icon: '⛏️' },
     { id: 'commands', label: 'Command Palette', icon: '🧠' },
     { id: 'ai-settings', label: 'AI Settings', icon: '⚙️' },
+    { id: 'learn', label: 'Tutorials', icon: '📚' },
   ];
 
 
@@ -48,6 +50,8 @@ export default function Home() {
         return <MinecraftCommandPalette onRunTask={handleRunCommandTask} />;
       case 'ai-settings':
         return <AIProviderSettings />;
+      case 'learn':
+        return <BeginnerTutorials />;
       default:
         return <WayaCreateAgent />;
     }
