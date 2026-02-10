@@ -19,6 +19,69 @@ interface AIConfig {
   maxTokens?: number;
 }
 
+const OPENROUTER_ALLOWED_MODELS = new Set([
+  'meta-llama/llama-3.2-3b-instruct:free',
+  'google/gemini-2.0-flash-exp:free',
+  'anthropic/claude-3.5-sonnet',
+  'openai/gpt-4o-mini',
+]);
+
+const DEFAULT_OPENROUTER_MODEL = 'meta-llama/llama-3.2-3b-instruct:free';
+const DEFAULT_OLLAMA_MODEL = 'llama3.2';
+const OLLAMA_ALLOWED_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
+const MAX_ALLOWED_TOKENS = 2000;
+
+function sanitizeMaxTokens(requestedMaxTokens?: number) {
+  if (typeof requestedMaxTokens !== 'number' || Number.isNaN(requestedMaxTokens)) {
+    return 1000;
+  }
+
+  return Math.max(200, Math.min(MAX_ALLOWED_TOKENS, Math.floor(requestedMaxTokens)));
+}
+
+function sanitizeTemperature(requestedTemperature?: number) {
+  if (typeof requestedTemperature !== 'number' || Number.isNaN(requestedTemperature)) {
+    return 0.7;
+  }
+
+  return Math.max(0, Math.min(1, requestedTemperature));
+}
+
+function getValidatedOpenRouterModel(requestedModel?: string) {
+  if (!requestedModel) {
+    return DEFAULT_OPENROUTER_MODEL;
+  }
+
+  return OPENROUTER_ALLOWED_MODELS.has(requestedModel) ? requestedModel : DEFAULT_OPENROUTER_MODEL;
+}
+
+function getValidatedOllamaUrl(requestedUrl?: string) {
+  const fallbackUrl = new URL('http://localhost:11434');
+  if (!requestedUrl) {
+    return fallbackUrl;
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(requestedUrl);
+  } catch {
+    throw new Error('Invalid Ollama URL. Use a trusted local URL such as http://localhost:11434.');
+  }
+
+  if (!['http:', 'https:'].includes(parsed.protocol)) {
+    throw new Error('Invalid Ollama URL protocol. Only http and https are supported.');
+  }
+
+  if (!OLLAMA_ALLOWED_HOSTS.has(parsed.hostname)) {
+    throw new Error('Untrusted Ollama URL host. Only localhost/loopback addresses are allowed.');
+  }
+
+  parsed.pathname = '';
+  parsed.search = '';
+  parsed.hash = '';
+  return parsed;
+}
+
 // WayaCreate Agent system prompt
 const WAYACREATE_SYSTEM_PROMPT = `You are WayaCreate AI Assistant, a specialized Minecraft modding expert trained on WayaCreate YouTube channel content and extensive ChatGPT user interactions.
 
@@ -63,10 +126,12 @@ You are integrated into MineAI IDE, a web-based Minecraft modding environment. Y
 Always respond as WayaCreate Assistant with your expertise in Minecraft modding!`;
 
 async function callOllama(messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>, aiConfig: AIConfig) {
-  const ollamaUrl = aiConfig.ollamaUrl || 'http://localhost:11434';
-  const model = aiConfig.model || 'llama3.2';
+  const ollamaUrl = getValidatedOllamaUrl(aiConfig.ollamaUrl);
+  const model = aiConfig.model || DEFAULT_OLLAMA_MODEL;
+  const maxTokens = sanitizeMaxTokens(aiConfig.maxTokens);
+  const temperature = sanitizeTemperature(aiConfig.temperature);
 
-  const response = await fetch(`${ollamaUrl}/api/chat`, {
+  const response = await fetch(`${ollamaUrl.origin}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -74,8 +139,8 @@ async function callOllama(messages: Array<{ role: 'system' | 'user' | 'assistant
       messages,
       stream: false,
       options: {
-        temperature: aiConfig.temperature ?? 0.7,
-        num_predict: aiConfig.maxTokens ?? 1000,
+        temperature,
+        num_predict: maxTokens,
       },
     }),
   });
@@ -119,9 +184,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ];
 
     const provider = aiConfig.provider || 'openrouter';
-    const model =
-      aiConfig.model ||
-      (provider === 'ollama' ? 'llama3.2' : 'meta-llama/llama-3.2-3b-instruct:free');
+    const model = provider === 'ollama' ? aiConfig.model || DEFAULT_OLLAMA_MODEL : getValidatedOpenRouterModel(aiConfig.model);
+    const maxTokens = sanitizeMaxTokens(aiConfig.maxTokens);
+    const temperature = sanitizeTemperature(aiConfig.temperature);
 
     console.log('WayaCreate Agent processing request:', {
       message,
@@ -142,8 +207,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const completion = await openai.chat.completions.create({
         model,
         messages,
-        max_tokens: aiConfig.maxTokens ?? 1000,
-        temperature: aiConfig.temperature ?? 0.7,
+        max_tokens: maxTokens,
+        temperature,
         stream: false,
       });
 
