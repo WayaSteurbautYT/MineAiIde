@@ -218,6 +218,7 @@ In MineAI → Settings → Switch to "Local AI"
 |-------|-------------|
 | **[🪟 Windows Build Guide](docs/build-windows.md)** | Build from source on Windows |
 | **[🎬 Video Scripts](docs/video-scripts.md)** | Scripts for tutorial videos/GIFs |
+| **[🧠 Minecraft Super IDE Plan](docs/minecraft-super-ide-plan.md)** | Cursor/Codex + MCreator-style roadmap |
 | **[🚀 Getting Started](docs/getting-started.md)** | First steps with MineAI |
 | **[💡 AI Commands](docs/ai-commands.md)** | Full list of AI prompts |
 | **[📦 Project Types](docs/project-types.md)** | Forge vs Fabric vs Spigot |
@@ -267,6 +268,14 @@ Output: `release/mineai-ide-1.0.0-x64-setup.exe`
 - [ ] Mod marketplace
 - [ ] Plugin system
 - [ ] Auto-updates
+
+### 🔮 Super IDE Vision
+- [ ] Cursor/Codex-style multi-agent coding experience
+- [ ] Blockbench + GeckoLib in-IDE production workflow
+- [ ] MCP-powered recommendations (Context7/Storm/custom servers)
+- [ ] Free + paid AI routing (Ollama/OpenRouter) with budget controls
+
+See **[Minecraft Super IDE Plan](docs/minecraft-super-ide-plan.md)** for the detailed architecture and phased backlog.
 
 ---
 

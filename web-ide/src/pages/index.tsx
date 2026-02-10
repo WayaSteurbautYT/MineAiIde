@@ -5,6 +5,9 @@ import { ProjectManager } from '../components/ProjectManager';
 import { CodeEditor } from '../components/CodeEditor';
 import { MinecraftTools } from '../components/MinecraftTools';
 import { TabNavigation } from '../components/TabNavigation';
+import { MinecraftCommandPalette } from '../components/MinecraftCommandPalette';
+import { AIProviderSettings } from '../components/AIProviderSettings';
+import { BeginnerTutorials } from '../components/BeginnerTutorials';
 import { useStore } from '../store/useStore';
 
 export default function Home() {
@@ -21,7 +24,17 @@ export default function Home() {
     { id: 'projects', label: 'Projects', icon: '📁' },
     { id: 'editor', label: 'Code Editor', icon: '💻' },
     { id: 'tools', label: 'Minecraft Tools', icon: '⛏️' },
+    { id: 'commands', label: 'Command Palette', icon: '🧠' },
+    { id: 'ai-settings', label: 'AI Settings', icon: '⚙️' },
+    { id: 'learn', label: 'Tutorials', icon: '📚' },
   ];
+
+
+  const handleRunCommandTask = (prompt: string) => {
+    setActiveTab('agent');
+    localStorage.setItem('mineai.quickPrompt', prompt);
+    window.dispatchEvent(new CustomEvent('mineai:quickPrompt', { detail: prompt }));
+  };
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -33,6 +46,12 @@ export default function Home() {
         return <CodeEditor />;
       case 'tools':
         return <MinecraftTools />;
+      case 'commands':
+        return <MinecraftCommandPalette onRunTask={handleRunCommandTask} />;
+      case 'ai-settings':
+        return <AIProviderSettings />;
+      case 'learn':
+        return <BeginnerTutorials />;
       default:
         return <WayaCreateAgent />;
     }

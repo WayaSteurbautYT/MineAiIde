@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
+import { useStore } from '../store/useStore';
 
 interface Message {
   id: string;
@@ -13,6 +14,7 @@ export const WayaCreateAgent: React.FC = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const { aiConfig } = useStore();
 
   useEffect(() => {
     // Welcome message from WayaCreate Agent
@@ -33,6 +35,31 @@ What would you like to work on today? Feel free to ask me anything about Minecra
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
+  }, []);
+
+
+  useEffect(() => {
+    const applyPrompt = (prompt: string | null) => {
+      if (prompt && prompt.trim()) {
+        setInput(prompt);
+      }
+    };
+
+    const pendingPrompt = localStorage.getItem('mineai.quickPrompt');
+    if (pendingPrompt) {
+      applyPrompt(pendingPrompt);
+      localStorage.removeItem('mineai.quickPrompt');
+    }
+
+    const handleQuickPrompt = (event: Event) => {
+      const customEvent = event as CustomEvent<string>;
+      applyPrompt(customEvent.detail);
+    };
+
+    window.addEventListener('mineai:quickPrompt', handleQuickPrompt);
+    return () => {
+      window.removeEventListener('mineai:quickPrompt', handleQuickPrompt);
+    };
   }, []);
 
   const sendMessage = async () => {
@@ -58,7 +85,8 @@ What would you like to work on today? Feel free to ask me anything about Minecra
         },
         body: JSON.stringify({
           message: input,
-          context: messages.slice(-5) // Send last 5 messages for context
+          context: messages.slice(-5),
+          aiConfig,
         })
       });
 
@@ -115,6 +143,7 @@ What would you like to work on today? Feel free to ask me anything about Minecra
           <div>
             <h2 className="text-lg font-semibold">WayaCreate Agent</h2>
             <p className="text-sm text-slate-400">Minecraft Modding Assistant</p>
+            <p className="text-xs text-slate-500">{aiConfig.provider} • {aiConfig.model}</p>
           </div>
           {isTyping && (
             <div className="ml-auto flex items-center space-x-2">

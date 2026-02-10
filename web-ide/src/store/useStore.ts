@@ -13,6 +13,16 @@ export interface Project {
   dependencies?: string[];
 }
 
+
+export interface AIConfig {
+  provider: 'openrouter' | 'ollama';
+  model: string;
+  ollamaUrl: string;
+  temperature: number;
+  maxTokens: number;
+  monthlyBudgetUsd: number;
+}
+
 export interface FileNode {
   id: string;
   name: string;
@@ -64,7 +74,12 @@ interface StoreState {
   }>;
   addToAgentHistory: (message: { role: 'user' | 'assistant'; content: string }) => void;
   clearAgentHistory: () => void;
+
+  // AI Provider Settings
+  aiConfig: AIConfig;
+  updateAIConfig: (updates: Partial<AIConfig>) => void;
 }
+
 
 export const useStore = create<StoreState>((set, get) => ({
   // Projects
@@ -132,4 +147,18 @@ export const useStore = create<StoreState>((set, get) => ({
       agentHistory: [...state.agentHistory, { ...message, timestamp: new Date() }],
     })),
   clearAgentHistory: () => set({ agentHistory: [] }),
+
+  // AI Provider Settings
+  aiConfig: {
+    provider: 'openrouter',
+    model: 'meta-llama/llama-3.2-3b-instruct:free',
+    ollamaUrl: 'http://localhost:11434',
+    temperature: 0.7,
+    maxTokens: 1000,
+    monthlyBudgetUsd: 10,
+  },
+  updateAIConfig: (updates) =>
+    set((state) => ({
+      aiConfig: { ...state.aiConfig, ...updates },
+    })),
 }));
