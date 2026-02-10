@@ -19,17 +19,32 @@ interface AIConfig {
   maxTokens?: number;
 }
 
-const OPENROUTER_ALLOWED_MODELS = new Set([
+const DEFAULT_OPENROUTER_ALLOWED_MODELS = new Set([
   'meta-llama/llama-3.2-3b-instruct:free',
   'google/gemini-2.0-flash-exp:free',
-  'anthropic/claude-3.5-sonnet',
-  'openai/gpt-4o-mini',
 ]);
 
 const DEFAULT_OPENROUTER_MODEL = 'meta-llama/llama-3.2-3b-instruct:free';
 const DEFAULT_OLLAMA_MODEL = 'llama3.2';
-const OLLAMA_ALLOWED_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
+const DEFAULT_OLLAMA_ORIGIN = 'http://localhost:11434';
+const ALLOWED_OLLAMA_ORIGINS = new Set([
+  DEFAULT_OLLAMA_ORIGIN,
+  'http://127.0.0.1:11434',
+  'http://[::1]:11434',
+]);
 const MAX_ALLOWED_TOKENS = 2000;
+
+function getAllowedOpenRouterModels() {
+  const customModels = process.env.OPENROUTER_ALLOWED_MODELS?.split(',')
+    .map((model) => model.trim())
+    .filter(Boolean);
+
+  if (!customModels?.length) {
+    return DEFAULT_OPENROUTER_ALLOWED_MODELS;
+  }
+
+  return new Set(customModels);
+}
 
 function sanitizeMaxTokens(requestedMaxTokens?: number) {
   if (typeof requestedMaxTokens !== 'number' || Number.isNaN(requestedMaxTokens)) {
@@ -48,15 +63,16 @@ function sanitizeTemperature(requestedTemperature?: number) {
 }
 
 function getValidatedOpenRouterModel(requestedModel?: string) {
+  const allowedModels = getAllowedOpenRouterModels();
   if (!requestedModel) {
     return DEFAULT_OPENROUTER_MODEL;
   }
 
-  return OPENROUTER_ALLOWED_MODELS.has(requestedModel) ? requestedModel : DEFAULT_OPENROUTER_MODEL;
+  return allowedModels.has(requestedModel) ? requestedModel : DEFAULT_OPENROUTER_MODEL;
 }
 
 function getValidatedOllamaUrl(requestedUrl?: string) {
-  const fallbackUrl = new URL('http://localhost:11434');
+  const fallbackUrl = new URL(DEFAULT_OLLAMA_ORIGIN);
   if (!requestedUrl) {
     return fallbackUrl;
   }
@@ -68,17 +84,14 @@ function getValidatedOllamaUrl(requestedUrl?: string) {
     throw new Error('Invalid Ollama URL. Use a trusted local URL such as http://localhost:11434.');
   }
 
-  if (!['http:', 'https:'].includes(parsed.protocol)) {
-    throw new Error('Invalid Ollama URL protocol. Only http and https are supported.');
-  }
-
-  if (!OLLAMA_ALLOWED_HOSTS.has(parsed.hostname)) {
-    throw new Error('Untrusted Ollama URL host. Only localhost/loopback addresses are allowed.');
-  }
-
   parsed.pathname = '';
   parsed.search = '';
   parsed.hash = '';
+
+  if (!ALLOWED_OLLAMA_ORIGINS.has(parsed.origin)) {
+    throw new Error('Untrusted Ollama URL. Only local Ollama origins are allowed.');
+  }
+
   return parsed;
 }
 

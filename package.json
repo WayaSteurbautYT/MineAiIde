@@ -51,17 +51,26 @@
       "!**/*.map"
     ],
     "win": {
-        "target": ["nsis", "portable"],
-        "icon": "public/icons/icon.svg",
+      "target": [
+        "nsis",
+        "portable"
+      ],
       "requestedExecutionLevel": "asInvoker"
     },
     "mac": {
-      "target": ["dmg", "zip"],
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "public/icons/icon.icns",
       "category": "public.app-category.developer-tools"
     },
     "linux": {
-      "target": ["AppImage", "deb", "rpm"],
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
       "icon": "public/icons",
       "category": "Development"
     },
